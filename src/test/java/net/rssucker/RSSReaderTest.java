@@ -1,8 +1,6 @@
-package rssucker;
+package net.rssucker;
 
 
-import net.rssucker.InvalidFeedException;
-import net.rssucker.RSSReader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
-import static org.junit.matchers.JUnitMatchers.*;
+import static org.junit.matchers.JUnitMatchers.hasItem;
 
 public class RSSReaderTest {
     RSSReader reader;
