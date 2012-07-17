@@ -38,22 +38,10 @@ public class RSSReader {
             items = new ArrayList<Item>(getItemCount());
             List<SyndEntry> entries = feed.getEntries();
             for(SyndEntry entry : entries){
-                 items.add(new Item(entry.getLink()));
+                 items.add(new Item( entry.getTitle(), entry.getLink()));
             }
         }
         return items;
     }
 
-    public static class Item{
-
-        private String url;
-
-        public Item(String url) {
-            this.url = url;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-    }
 }

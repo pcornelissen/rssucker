@@ -48,10 +48,24 @@ public class RSSReaderTest {
                 "http://example.com/12.zip",
                 "http://example.com/123.zip");
         Set<String> seen = new HashSet<String>(urls.size());
-        for(RSSReader.Item item : reader.getItems()){
+        for(Item item : reader.getItems()){
             assertThat(urls, hasItem(item.getUrl()));
             assertThat(seen, not(hasItem(item.getUrl())));
             seen.add(item.getUrl());
+        }
+    }
+
+    @Test
+    public void canGetTitlesOfStreamEntries() {
+        List<String> titles = Arrays.asList("Title with äöüß&/$%/ special chars",
+                "Title1 with normal chars",
+                "Title2 with normal chars",
+                "Title3 with normal chars");
+        Set<String> seen = new HashSet<String>(titles.size());
+        for(Item item : reader.getItems()){
+            assertThat(titles, hasItem(item.getTitle()));
+            assertThat(seen, not(hasItem(item.getTitle())));
+            seen.add(item.getTitle());
         }
     }
 }
