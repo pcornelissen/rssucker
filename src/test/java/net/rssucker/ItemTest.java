@@ -9,22 +9,22 @@ public class ItemTest {
     @Test
     public void canDetectAXBBEpisodeSchema() {
         Item item = new Item("TestShow 3X06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-        assertThat(item.getEpisode(), is(6));
-        assertThat(item.getSeason(), is(3));
+        assertThat(item.getEpisode().getNumber(), is(6));
+        assertThat(item.getEpisode().getSeason(), is(3));
     }
 
     @Test
     public void canDetectAxBBEpisodeSchema() {
         Item item = new Item("TestShow 3x06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-        assertThat(item.getEpisode(), is(6));
-        assertThat(item.getSeason(), is(3));
+        assertThat(item.getEpisode().getNumber(), is(6));
+        assertThat(item.getEpisode().getSeason(), is(3));
     }
 
     @Test
     public void canDetectSAAEBBEpisodeSchema() {
         Item item = new Item("TestShow S03E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-        assertThat(item.getEpisode(), is(6));
-        assertThat(item.getSeason(), is(3));
+        assertThat(item.getEpisode().getNumber(), is(6));
+        assertThat(item.getEpisode().getSeason(), is(3));
     }
 
     @Test

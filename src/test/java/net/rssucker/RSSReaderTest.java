@@ -70,15 +70,6 @@ public class RSSReaderTest {
     }
 
     @Test
-    public void canGetSeasonOfAllStreamEntries() {
-        parseResource("full.xml");
-
-        for(Item item : reader.getItems()){
-            assertThat(item.getSeason(),is(notNullValue()));
-        }
-    }
-
-    @Test
     public void canGetEpisodeOfAllStreamEntries() {
         parseResource("full.xml");
 
@@ -102,10 +93,10 @@ public class RSSReaderTest {
         Item oldItem = null;
         for(Item item : reader.getItems()){
             if(oldItem!=null){
-                if(oldItem.getSeason().equals(item.getSeason())){
-                    assertThat(item.getEpisode(), is(greaterThanOrEqualTo(oldItem.getEpisode())));
+                if(oldItem.getEpisode().getSeason()==item.getEpisode().getSeason()){
+                    assertThat(item.getEpisode().getNumber(), is(greaterThanOrEqualTo(oldItem.getEpisode().getNumber())));
                 }
-                else assertThat(item.getSeason(), is(greaterThanOrEqualTo(oldItem.getSeason())));
+                else assertThat(item.getEpisode().getSeason(), is(greaterThanOrEqualTo(oldItem.getEpisode().getSeason())));
             }
             oldItem = item;
         }

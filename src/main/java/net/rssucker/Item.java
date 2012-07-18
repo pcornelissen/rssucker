@@ -8,8 +8,7 @@ import java.util.regex.Pattern;
 public class Item {
     private String url;
     private String title;
-    private Integer episode=null;
-    private Integer season=null;
+    private Episode episode=null;
     private Quality quality=null;
 
     public Item(String title, String url) {
@@ -26,8 +25,7 @@ public class Item {
         final Pattern p = Pattern.compile(".*(?<season>\\d+)x(?<episode>\\d+).*",Pattern.CASE_INSENSITIVE);
         final Matcher m = p.matcher(title);
         if(m.find()){
-            season =Integer.valueOf(m.group("season"));
-            episode =Integer.valueOf(m.group("episode"));
+            episode = new Episode(Integer.valueOf(m.group("season")),Integer.valueOf(m.group("episode")));
             return true;
         }
         return false;
@@ -36,8 +34,7 @@ public class Item {
         final Pattern p = Pattern.compile(".*s(?<season>\\d+)e(?<episode>\\d+).*",Pattern.CASE_INSENSITIVE);
         final Matcher m = p.matcher(title);
         if(m.find()){
-            season =Integer.valueOf(m.group("season"));
-            episode =Integer.valueOf(m.group("episode"));
+            episode = new Episode(Integer.valueOf(m.group("season")),Integer.valueOf(m.group("episode")));
             return true;
         }
         return false;
@@ -62,13 +59,10 @@ public class Item {
         return title;
     }
 
-    public int getEpisode() {
+    public Episode getEpisode() {
         return episode;
     }
 
-    public Integer getSeason() {
-        return season;
-    }
 
     public Quality getQuality() {
         return quality;
@@ -77,11 +71,7 @@ public class Item {
     public static class ItemComparator implements Comparator<Item>{
         @Override
         public int compare(Item o1, Item o2) {
-            if(o1.getSeason()>o2.getSeason())return 1;
-            if(o1.getSeason()<o2.getSeason())return -1;
-            if(o1.getEpisode()>o2.getEpisode())return 1;
-            if(o1.getEpisode()<o2.getEpisode())return -1;
-            return 0;
+            return o1.getEpisode().compareTo(o2.getEpisode());
         }
     }
 }

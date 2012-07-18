@@ -36,14 +36,6 @@ public class RSSucker {
     }
 
     private boolean isAfterGivenEpisode(int season, int episode, Item item) {
-        return isLaterSeason(season, item) || laterEpisodeInSeason(season, episode, item);
-    }
-
-    private boolean laterEpisodeInSeason(int season, int episode, Item item) {
-        return (item.getSeason()==season && item.getEpisode()>episode);
-    }
-
-    private boolean isLaterSeason(int season, Item item) {
-        return item.getSeason()>season;
+        return new Episode(season,episode).compareTo(item.getEpisode())==-1;
     }
 }
