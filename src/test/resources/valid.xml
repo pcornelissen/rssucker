@@ -6,28 +6,28 @@
         <ttl>30</ttl>
         <description>EZTV RSS feed for selected show/news</description>
         <item>
-            <title><![CDATA[Title with äöüß&/$%/ special chars]]></title>
+            <title><![CDATA[Title with äöüß&/$%/ special chars 1x1]]></title>
             <pubDate>Mon, 24 May 2010 00:00:00 GMT</pubDate>
             <link><![CDATA[http://example.com/123.S08E24.720p.HDTV.X264.[testtest].zip]]></link>
             <description>
                 <![CDATA[funny description with special chars äöüß&/$%/[öö]..]]></description>
         </item>
         <item>
-            <title><![CDATA[Title1 with normal chars]]></title>
+            <title><![CDATA[Title1 with normal chars 1x1]]></title>
             <pubDate>Mon, 24 May 2010 12:11:10 GMT</pubDate>
             <link><![CDATA[http://example.com/1.zip]]></link>
             <description>
                 <![CDATA[funny description1 without special chars]]></description>
         </item>
         <item>
-            <title><![CDATA[Title2 with normal chars]]></title>
+            <title><![CDATA[Title2 with normal chars 1x1]]></title>
             <pubDate>Mon, 24 May 2010 12:11:10 GMT</pubDate>
             <link><![CDATA[http://example.com/12.zip]]></link>
             <description>
                 <![CDATA[funny description2 without special chars]]></description>
         </item>
         <item>
-            <title><![CDATA[Title3 with normal chars]]></title>
+            <title><![CDATA[Title3 with normal chars 1x1]]></title>
             <pubDate>Mon, 24 May 2010 12:11:10 GMT</pubDate>
             <link><![CDATA[http://example.com/123.zip]]></link>
             <description>

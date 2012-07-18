@@ -6,17 +6,16 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class RSSReader {
 
     private SyndFeed feed;
-    private Collection<Item> items=null;
+    private List<Item> items = null;
 
     public void parse(InputStream stream) {
         SyndFeedInput input = new SyndFeedInput();
@@ -33,13 +32,14 @@ public class RSSReader {
         return feed.getEntries().size();
     }
 
-    public Collection<Item> getItems() {
-        if(items==null){
+    public List<Item> getItems() {
+        if (items == null) {
             items = new ArrayList<Item>(getItemCount());
             List<SyndEntry> entries = feed.getEntries();
-            for(SyndEntry entry : entries){
-                 items.add(new Item( entry.getTitle(), entry.getLink()));
+            for (SyndEntry entry : entries) {
+                items.add(new Item(StringEscapeUtils.unescapeHtml4(entry.getTitle()), entry.getLink()));
             }
+            Collections.sort((List<Item>) items, new Item.ItemComparator());
         }
         return items;
     }
