@@ -15,15 +15,24 @@ public class RSSucker {
         rssReader.parse(inputStream);
     }
 
-    public List<Item> fetchNewItems(int season, int episode) {
+    public List<Item> fetchNewItems(int season, int episode, Quality quality) {
         List<Item> items = new ArrayList<Item>();
         for(Item item:rssReader.getItems()){
-            if(isAfterGivenEpisode(season, episode, item)){
+            if(passesCriteria(season, episode, quality, item)){
                 items.add(item);
             }
         }
         return items;
 
+    }
+
+    private boolean passesCriteria(int season, int episode, Quality quality, Item item) {
+        return isAfterGivenEpisode(season, episode, item)
+                && isCorrectQuality(quality, item);
+    }
+
+    private boolean isCorrectQuality(Quality quality, Item item) {
+        return (item.getQuality()==quality || quality== Quality.ANY);
     }
 
     private boolean isAfterGivenEpisode(int season, int episode, Item item) {
