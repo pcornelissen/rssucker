@@ -38,28 +38,49 @@ public class ConfigTest {
     public void initConfigWithExistingFileWithOneFeed() throws IOException, URISyntaxException {
         File configFile = initConfigFile("oneFeed.json");
         Config config = new Config(configFile);
-        assertThat(config.getFeedCount(),is(1));
+        assertThat(config.getFeedCount(), is(1));
     }
 
     @Test
     public void fetchAddressFromConfigFeed() throws IOException, URISyntaxException {
         File configFile = initConfigFile("oneFeed.json");
         Config config = new Config(configFile);
-        assertThat(config.getFeeds().get(0).getAddress(),is("full.xml"));
-        assertThat(config.getFeeds().get(0).getEpisode(),is(new Episode(3,4)));
+        assertThat(config.getFeeds().get(0).getAddress(), is("full.xml"));
+        assertThat(config.getFeeds().get(0).getEpisode(), is(new Episode(3, 4)));
     }
+
     @Test
     public void fetchAddressFromConfigFeedWithoutSeason() throws IOException, URISyntaxException {
         File configFile = initConfigFile("oneFeedWithoutSeason.json");
         Config config = new Config(configFile);
-        assertThat(config.getFeeds().get(0).getAddress(),is("full.xml"));
-        assertThat(config.getFeeds().get(0).getEpisode(),is(new Episode(0,4)));
+        assertThat(config.getFeeds().get(0).getAddress(), is("full.xml"));
+        assertThat(config.getFeeds().get(0).getEpisode(), is(new Episode(0, 4)));
     }
+
     @Test
     public void fetchAddressFromConfigFeedWithoutEpisode() throws IOException, URISyntaxException {
         File configFile = initConfigFile("oneFeedWithoutEpisode.json");
         Config config = new Config(configFile);
-        assertThat(config.getFeeds().get(0).getAddress(),is("full.xml"));
-        assertThat(config.getFeeds().get(0).getEpisode(),is(new Episode(3,0)));
+        assertThat(config.getFeeds().get(0).getAddress(), is("full.xml"));
+        assertThat(config.getFeeds().get(0).getEpisode(), is(new Episode(3, 0)));
+    }
+
+    @Test
+    public void fetch2FeedsFromConfig() throws IOException, URISyntaxException {
+        File configFile = initConfigFile("twoFeed.json");
+        Config config = new Config(configFile);
+        assertThat(config.getFeedCount(), is(2));
+        assertThat(config.getFeeds().get(1).getAddress(), is("full2.xml"));
+        assertThat(config.getFeeds().get(1).getEpisode(), is(new Episode(32, 42)));
+    }
+
+    @Test
+    public void writeUpdatedEpisodeToConfig() throws IOException, URISyntaxException {
+        File configFile = initConfigFile("twoFeed.json");
+        Config config = new Config(configFile);
+        assertThat(config.getFeedCount(), is(2));
+        config.getFeeds().get(1).setEpisode(new Episode(23,42));
+        config.write();
+//        assertThat(config.getFeeds().get(1).getEpisode(), is(new Episode(32, 42)));
     }
 }
