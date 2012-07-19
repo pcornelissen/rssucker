@@ -6,7 +6,7 @@ import java.util.Comparator;
 class Item {
     private final String url;
     private final String title;
-    private Episode episode = null;
+    Episode episode = null;
     private Quality quality = null;
 
     public Item(String title, String url) {
@@ -36,10 +36,30 @@ class Item {
         return quality;
     }
 
+    public boolean isCorrectQuality(Quality quality) {
+        return (getQuality() == quality || quality == Quality.ANY);
+    }
+
+    boolean passesCriteria(FeedConfig config) {
+        Quality quality= config.getQuality();
+        return getEpisode().isAfterGivenEpisode(config.getEpisode())
+                && isCorrectQuality(quality);
+    }
+
     public static class ItemComparator implements Comparator<Item> {
         @Override
         public int compare(Item o1, Item o2) {
             return o1.getEpisode().compareTo(o2.getEpisode());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", episode=" + episode +
+                ", quality=" + quality +
+                '}';
     }
 }

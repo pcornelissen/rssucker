@@ -19,23 +19,26 @@ class Config {
     private final String configName;
 
     public Config(File file) throws IOException {
+        configName = file.getAbsolutePath();
         if (file.canRead()) {
-            configName = file.getAbsolutePath();
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(file);
-            Iterator<Map.Entry<String,JsonNode>> iterator = rootNode.getFields();
+            Iterator<Map.Entry<String, JsonNode>> iterator = rootNode.getFields();
             while (iterator.hasNext()) {
                 Map.Entry<String, JsonNode> elt = iterator.next();
                 JsonNode node = elt.getValue();
                 Episode episode = new Episode(getLastSeasonFromNode(node), getLastEpisodeFromNode(node));
                 String address = node.get("address").asText();
                 String name = elt.getKey();
-                FeedConfig feedConfig = new FeedConfig(address, name, episode);
+                FeedConfig feedConfig = new FeedConfig(address, name, episode, Quality.MEDIUM);
                 feeds.add(feedConfig);
             }
-        } else {
-            configName = System.getProperty("user.home") + File.pathSeparatorChar + ".rssucker";
         }
+    }
+
+
+    public Config() throws IOException {
+        this(new File(System.getProperty("user.home") + File.separatorChar + ".rssucker"));
     }
 
     private int getLastEpisodeFromNode(JsonNode node) {
@@ -62,6 +65,7 @@ class Config {
 
     public void write() throws IOException {
         File file = new File(configName);
+        file.delete();
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode parentNode = mapper.createObjectNode();
         for (FeedConfig feed : feeds) {

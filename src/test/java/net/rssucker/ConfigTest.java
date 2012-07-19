@@ -80,12 +80,11 @@ public class ConfigTest {
         File configFile = initConfigFile("twoFeed.json");
         Config config = new Config(configFile);
         assertThat(config.getFeedCount(), is(2));
-        config.getFeeds().get(1).setEpisode(new Episode(23, 42));
+        config.getFeeds().get(1).setEpisode(new Episode(23, 422));
         config.write();
 
         Config updatedConfig = new Config(configFile);
         assertThat(updatedConfig.getFeedCount(), is(2));
-        assertThat(updatedConfig.getFeeds().get(1).getEpisode(), is(new Episode(32, 42)));
-        config.getFeeds().get(1).getEpisode().equals(new Episode(23, 42));
+        assertThat(updatedConfig.getFeeds().get(1).getEpisode(), is(new Episode(23, 422)));
     }
 }

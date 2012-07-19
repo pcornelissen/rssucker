@@ -6,11 +6,17 @@ class FeedConfig {
     private final String address;
     private final String name;
     private Episode episode;
+    private Quality quality;
 
-    public FeedConfig(String address, String name, Episode episode) {
+    public FeedConfig(String address, String name) {
+        this(address,name,new Episode(0,0), Quality.MEDIUM);
+    }
+
+    public FeedConfig(String address, String name, Episode episode, Quality quality) {
         this.address = address;
         this.name = name;
         this.episode = episode;
+        this.quality = quality;
     }
 
     public String getAddress() {
@@ -27,5 +33,9 @@ class FeedConfig {
 
     public String getName() {
         return name;
+    }
+
+    public Quality getQuality() {
+        return quality;
     }
 }

@@ -8,22 +8,26 @@ import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-class RSSReader {
+class Feed {
+
+    private final FeedConfig config;
 
     private SyndFeed feed;
     private List<Item> items = null;
 
-    public void parse(InputStream stream) {
+    Feed(FeedConfig config) {
+        this.config = config;
+    }
+
+    public void parse(XmlReader reader) {
         SyndFeedInput input = new SyndFeedInput();
         try {
-            feed = input.build(new XmlReader(stream));
+            feed = input.build(reader);
         } catch (FeedException e) {
-            throw new InvalidFeedException(e);
-        } catch (IOException e) {
             throw new InvalidFeedException(e);
         }
     }
@@ -44,4 +48,21 @@ class RSSReader {
         return items;
     }
 
+    public FeedConfig getConfig() {
+        return config;
+    }
+
+    private boolean passesCriteria(Item item) {
+        return item.passesCriteria(getConfig());
+    }
+
+    public List<Item> getNewItems() {
+        List<Item> newItems = new ArrayList<Item>();
+        for (Item item : getItems()) {
+            if (passesCriteria(item)) {
+                newItems.add(item);
+            }
+        }
+        return newItems;
+    }
 }

@@ -73,4 +73,8 @@ public class Episode implements Comparable<Episode> {
         return null;
 
     }
+
+    public boolean isAfterGivenEpisode(Episode givenEpisode) {
+        return givenEpisode.compareTo(this) == -1;
+    }
 }
