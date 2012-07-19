@@ -1,12 +1,6 @@
 package net.rssucker;
 
-/**
-* Created with IntelliJ IDEA.
-* User: pcornelissen
-* Date: 19.07.12
-* Time: 08:54
-* To change this template use File | Settings | File Templates.
-*/
+
 public class FeedConfig {
 
     private final String address;

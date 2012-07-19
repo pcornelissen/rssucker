@@ -15,4 +15,15 @@ public enum Quality {
     public List<String> getPossibleKeys() {
         return possibleKeys;
     }
+
+    public static Quality parseFromString(String string) {
+        for(Quality quality: values()){
+            for(String key:quality.getPossibleKeys()){
+                if(string.toLowerCase().contains(key.toLowerCase())){
+                    return quality;
+                }
+            }
+        }
+        return ANY;
+    }
 }

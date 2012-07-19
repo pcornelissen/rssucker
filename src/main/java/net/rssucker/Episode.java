@@ -4,7 +4,14 @@ package net.rssucker;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Episode implements Comparable<Episode> {
+    private static final String PATTERN_AAxBB = ".*(?<season>\\d+)x(?<episode>\\d+).*";
+    private static final String PATTERN_sAAeBB = ".*s(?<season>\\d+)e(?<episode>\\d+).*";
     private int season;
     private int episodeNumber;
 
@@ -50,5 +57,20 @@ public class Episode implements Comparable<Episode> {
     @Override
     public String toString() {
         return "[S" + season + "E" + episodeNumber + ']';
+    }
+
+    public static Episode parseEpisode(String text) {
+        List<String> patterns = Arrays.asList(
+                PATTERN_AAxBB,
+                PATTERN_sAAeBB);
+        for (String pattern : patterns) {
+            final Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+            final Matcher m = p.matcher(text);
+            if (m.find()) {
+                return new Episode(Integer.valueOf(m.group("season")), Integer.valueOf(m.group("episode")));
+            }
+        }
+        return null;
+
     }
 }
