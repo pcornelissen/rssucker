@@ -27,6 +27,11 @@ public class ItemTest {
         assertThat(item.getEpisode().getSeason(), is(3));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void throwExceptionWithoutEpisodeSchemaDetectable() {
+        new Item("TestShow pilot (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.pilot.(HDTV-x264-ASAP).[providertag].file");
+    }
+
     @Test
     public void canDetermineQualityHigh(){
         Item item = new Item("TestShow S03E06 (720p HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
