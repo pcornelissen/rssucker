@@ -24,7 +24,7 @@ public class ConfigTest {
         testFolder.create();
         File configFile = testFolder.newFile();
         URL resource = this.getClass().getClassLoader().getResource(feedName);
-        File template = new File(resource.toURI());
+        @SuppressWarnings("ConstantConditions") File template = new File(resource.toURI());
         Files.copy(template.toPath(), configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return configFile;
     }
@@ -32,6 +32,7 @@ public class ConfigTest {
     @Test
     public void initConfigWithMissingFile() throws IOException {
         Config config = new Config(new File("test"));
+        assertThat(config.getFeedCount(),is(0));
     }
 
     @Test

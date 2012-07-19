@@ -14,8 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Config {
-    private List<FeedConfig> feeds = new ArrayList<FeedConfig>();
+class Config {
+    private final List<FeedConfig> feeds = new ArrayList<FeedConfig>();
     private final String configName;
 
     public Config(File file) throws IOException {

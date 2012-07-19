@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 public class Episode implements Comparable<Episode> {
     private static final String PATTERN_AAxBB = ".*(?<season>\\d+)x(?<episode>\\d+).*";
     private static final String PATTERN_sAAeBB = ".*s(?<season>\\d+)e(?<episode>\\d+).*";
-    private int season;
-    private int episodeNumber;
+    private final int season;
+    private final int episodeNumber;
 
     public Episode(int season, int episodeNumber) {
         this.season = season;

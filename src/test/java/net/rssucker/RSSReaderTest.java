@@ -18,7 +18,7 @@ import static org.junit.Assume.assumeThat;
 import static org.junit.matchers.JUnitMatchers.hasItem;
 
 public class RSSReaderTest {
-    RSSReader reader;
+    private RSSReader reader;
 
     @Before
     public void setUp() {

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-public class RSSReader {
+class RSSReader {
 
     private SyndFeed feed;
     private List<Item> items = null;
@@ -35,7 +35,7 @@ public class RSSReader {
     public List<Item> getItems() {
         if (items == null) {
             items = new ArrayList<Item>(getItemCount());
-            List<SyndEntry> entries = feed.getEntries();
+            @SuppressWarnings("unchecked") List<SyndEntry> entries = feed.getEntries();
             for (SyndEntry entry : entries) {
                 items.add(new Item(StringEscapeUtils.unescapeHtml4(entry.getTitle()), entry.getLink()));
             }

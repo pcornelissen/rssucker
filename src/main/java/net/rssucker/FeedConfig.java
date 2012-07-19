@@ -1,7 +1,7 @@
 package net.rssucker;
 
 
-public class FeedConfig {
+class FeedConfig {
 
     private final String address;
     private final String name;

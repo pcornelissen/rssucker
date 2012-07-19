@@ -3,9 +3,9 @@ package net.rssucker;
 
 import java.util.Comparator;
 
-public class Item {
-    private String url;
-    private String title;
+class Item {
+    private final String url;
+    private final String title;
     private Episode episode = null;
     private Quality quality = null;
 
