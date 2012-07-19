@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Config {
-    private String feedAddress;
-    private Episode lastEpisode = new Episode(0, 0);
     private List<FeedConfig> feeds = new ArrayList<FeedConfig>();
     private final String configName;
 
@@ -63,8 +61,7 @@ public class Config {
     }
 
     public void write() throws IOException {
-//        File file = new File(configName);
-        File file = new File("/tmp/test.json");
+        File file = new File(configName);
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode parentNode = mapper.createObjectNode();
         for (FeedConfig feed : feeds) {
@@ -90,32 +87,4 @@ public class Config {
 
     }
 
-    public static class FeedConfig {
-
-        private final String address;
-        private final String name;
-        private Episode episode;
-
-        public FeedConfig(String address, String name, Episode episode) {
-            this.address = address;
-            this.name = name;
-            this.episode = episode;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public Episode getEpisode() {
-            return episode;
-        }
-
-        public void setEpisode(Episode episode) {
-            this.episode = episode;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
 }
