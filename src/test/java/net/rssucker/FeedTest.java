@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 import static org.junit.matchers.JUnitMatchers.hasItem;
-@Ignore
+@Ignore("needs fixing after refactoring")
 public class FeedTest {
     private Feed feed;
     private FeedConfig config;

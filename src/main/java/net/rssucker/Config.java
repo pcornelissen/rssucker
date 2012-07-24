@@ -17,22 +17,43 @@ import java.util.Map;
 class Config {
     private final List<FeedConfig> feeds = new ArrayList<FeedConfig>();
     private final String configName;
+    private String downloadLocation;
 
     public Config(File file) throws IOException {
         configName = file.getAbsolutePath();
         if (file.canRead()) {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(file);
+            if(rootNode.has("downloaddir")){
+                downloadLocation = rootNode.get("downloaddir").asText();
+            } else{
+                downloadLocation = System.getProperty("user.home") + File.separatorChar + "rssucker";
+            }
             Iterator<Map.Entry<String, JsonNode>> iterator = rootNode.getFields();
             while (iterator.hasNext()) {
                 Map.Entry<String, JsonNode> elt = iterator.next();
-                JsonNode node = elt.getValue();
-                Episode episode = new Episode(getLastSeasonFromNode(node), getLastEpisodeFromNode(node));
-                String address = node.get("address").asText();
-                String name = elt.getKey();
-                FeedConfig feedConfig = new FeedConfig(address, name, episode, Quality.MEDIUM);
-                feeds.add(feedConfig);
+                switch(elt.getKey().toLowerCase()){
+                    case "feeds":
+                        parseFeeds(elt.getValue());
+                        break;
+                    case "downloaddir":
+                        break;
+                }
             }
+            parseFeeds(rootNode);
+        }
+    }
+
+    private void parseFeeds(JsonNode rootNode) {
+        Iterator<Map.Entry<String, JsonNode>> iterator = rootNode.getFields();
+        while (iterator.hasNext()) {
+            Map.Entry<String, JsonNode> elt = iterator.next();
+            JsonNode node = elt.getValue();
+            Episode episode = new Episode(getLastSeasonFromNode(node), getLastEpisodeFromNode(node));
+            String address = node.get("address").asText();
+            String name = elt.getKey();
+            FeedConfig feedConfig = new FeedConfig(address, name, episode, Quality.MEDIUM);
+            feeds.add(feedConfig);
         }
     }
 
@@ -61,6 +82,10 @@ class Config {
 
     public List<FeedConfig> getFeeds() {
         return feeds;
+    }
+
+    public String getDownloadLocation() {
+        return downloadLocation;
     }
 
     public void write() throws IOException {

@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Episode implements Comparable<Episode> {
-    private static final String PATTERN_AAxBB = ".*(?<season>\\d+)x(?<episode>\\d+).*";
+    private static final String PATTERN_AAxBB = "[^\\d]*(?<season>\\d+)x(?<episode>\\d+).*";
     private static final String PATTERN_sAAeBB = ".*s(?<season>\\d+)e(?<episode>\\d+).*";
     private final int season;
     private final int episodeNumber;
@@ -47,7 +47,7 @@ public class Episode implements Comparable<Episode> {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!getClass().equals(obj.getClass())) {
             return false;
         }
         final Episode other = (Episode) obj;

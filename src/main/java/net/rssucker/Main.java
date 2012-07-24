@@ -20,8 +20,7 @@ public class Main {
             for (Item item : feed.getNewItems()) {
 //                System.out.println(item);
                 try{
-                    UrlDownload.fileDownload(item.getUrl(), // "/tmp/test");
-                    "/mnt/data/share/torrent/todo");
+                    UrlDownload.fileDownload(item.getUrl(), config.getDownloadLocation());
                     feed.getConfig().setEpisode(item.getEpisode());
                 } catch(NullPointerException e){
                     System.out.println("Error while getting: "+item.getUrl());
