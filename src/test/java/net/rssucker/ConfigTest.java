@@ -1,6 +1,8 @@
 package net.rssucker;
 
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -24,7 +26,7 @@ public class ConfigTest {
         testFolder.create();
         File configFile = testFolder.newFile();
         URL resource = this.getClass().getClassLoader().getResource(feedName);
-        @SuppressWarnings("ConstantConditions") File template = new File(resource.toURI());
+        File template = new File(resource.toURI());
         Files.copy(template.toPath(), configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return configFile;
     }
@@ -75,16 +77,31 @@ public class ConfigTest {
         assertThat(config.getFeeds().get(1).getEpisode(), is(new Episode(32, 42)));
     }
 
-    @Test
-    public void writeUpdatedEpisodeToConfig() throws IOException, URISyntaxException {
-        File configFile = initConfigFile("twoFeed.json");
-        Config config = new Config(configFile);
-        assertThat(config.getFeedCount(), is(2));
-        config.getFeeds().get(1).setEpisode(new Episode(23, 422));
-        config.write();
+	@Test
+	public void writeUpdatedEpisodeToConfig() throws IOException, URISyntaxException {
+		File configFile = initConfigFile("twoFeed.json");
+		Config config = new Config(configFile);
+		assertThat(config.getFeedCount(), is(2));
+		config.getFeeds().get(1).setEpisode(new Episode(23, 422));
+		config.write();
 
-        Config updatedConfig = new Config(configFile);
-        assertThat(updatedConfig.getFeedCount(), is(2));
-        assertThat(updatedConfig.getFeeds().get(1).getEpisode(), is(new Episode(23, 422)));
-    }
+		Config updatedConfig = new Config(configFile);
+		assertThat(updatedConfig.getFeedCount(), is(2));
+		assertThat(updatedConfig.getFeeds().get(1).getEpisode(), is(new Episode(23, 422)));
+	}
+
+	@Test
+	public void writtenConfigContainsDownloadDir() throws IOException, URISyntaxException {
+		File configFile = initConfigFile("twoFeed.json");
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode rootNode = mapper.readTree(configFile);
+		assertThat(rootNode.has("downloaddir"),is(false));
+
+		Config config = new Config(configFile);
+		config.write();
+
+		rootNode = mapper.readTree(configFile);
+		assertThat(rootNode.has("downloaddir"),is(true));
+	}
 }
