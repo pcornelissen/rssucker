@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 class Config {
-    private final List<FeedConfig> feeds = new ArrayList<FeedConfig>();
+    private final List<FeedConfig> feeds = new ArrayList<>();
     private final String configName;
     private String downloadLocation;
 
@@ -89,11 +89,12 @@ class Config {
 
     public void write() throws IOException {
         File file = new File(configName);
-        file.delete();
+	    //noinspection ResultOfMethodCallIgnored
+	    file.delete();
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode parentNode = mapper.createObjectNode();
 	    feedsToNodes(parentNode.putObject("feeds"));
-	    parentNode.put("downloaddir",downloadLocation);
+	    parentNode.put("downloaddir", downloadLocation);
 
 	    String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parentNode);
 

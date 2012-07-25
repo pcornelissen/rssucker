@@ -50,7 +50,7 @@ public class FeedTest {
 				"http://example.com/1.zip",
 				"http://example.com/12.zip",
 				"http://example.com/123.zip");
-		Set<String> seen = new HashSet<String>(urls.size());
+		Set<String> seen = new HashSet<>(urls.size());
 		for (Item item : feed.getItems()) {
 			assertThat(urls, hasItem(item.getUrl()));
 			assertThat(seen, not(hasItem(item.getUrl())));
@@ -66,7 +66,7 @@ public class FeedTest {
 				"Title1 with normal chars 1x1",
 				"Title2 with normal chars 1x1",
 				"Title3 with normal chars 1x1");
-		Set<String> seen = new HashSet<String>(titles.size());
+		Set<String> seen = new HashSet<>(titles.size());
 		for (Item item : feed.getItems()) {
 			assertThat(titles, hasItem(item.getTitle()));
 			assertThat(seen, not(hasItem(item.getTitle())));

@@ -38,7 +38,7 @@ class Feed {
 
     public List<Item> getItems() {
         if (items == null) {
-            items = new ArrayList<Item>(getItemCount());
+            items = new ArrayList<>(getItemCount());
             @SuppressWarnings("unchecked") List<SyndEntry> entries = feed.getEntries();
             for (SyndEntry entry : entries) {
                 items.add(new Item(StringEscapeUtils.unescapeHtml4(entry.getTitle()), entry.getLink()));
@@ -57,7 +57,7 @@ class Feed {
     }
 
     public List<Item> getNewItems() {
-        List<Item> newItems = new ArrayList<Item>();
+        List<Item> newItems = new ArrayList<>();
         for (Item item : getItems()) {
             if (passesCriteria(item)) {
                 newItems.add(item);

@@ -6,7 +6,7 @@ class FeedConfig {
     private final String address;
     private final String name;
     private Episode episode;
-    private Quality quality;
+    private final Quality quality;
 
     public FeedConfig(String address, String name) {
         this(address,name,new Episode(0,0), Quality.MEDIUM);

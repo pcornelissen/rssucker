@@ -1,6 +1,6 @@
 rssucker
 ========
 
-Downloads episoded from configured streams
+Downloads episodes from configured streams
 
 Not ready yet!

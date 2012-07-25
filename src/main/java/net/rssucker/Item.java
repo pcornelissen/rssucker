@@ -6,7 +6,7 @@ import java.util.Comparator;
 class Item {
     private final String url;
     private final String title;
-    Episode episode = null;
+    private Episode episode = null;
     private Quality quality = null;
 
     public Item(String title, String url) {

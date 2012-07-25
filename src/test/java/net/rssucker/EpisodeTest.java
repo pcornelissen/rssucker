@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class EpisodeTest {
-    Episode episode;
+    private Episode episode;
     @Before
     public void setup(){
         episode = new Episode(21,42);
@@ -68,11 +68,13 @@ public class EpisodeTest {
         assertThat(episode.equals(Episode.parseEpisode("[S21E41]")),is(false));
     }
 
+    @SuppressWarnings("ObjectEqualsNull")
     @Test
     public void testEqualsForNull() {
         assertThat(episode.equals(null),is(false));
     }
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     public void testEqualsForOtherObj() {
         assertThat(episode.equals("meepmeep"),is(false));
@@ -97,11 +99,6 @@ public class EpisodeTest {
     @Test
     public void testToString() {
         assertThat(episode.toString(),is("[S21E42]"));
-    }
-
-    @Test
-    public void testIsAfterGivenEpisode() {
-
     }
 
     @Test
