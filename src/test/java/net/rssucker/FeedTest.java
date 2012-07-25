@@ -44,10 +44,10 @@ public class FeedTest {
 	}
 
 	@Test
-	public void canGetURLsOfStreamEntries() throws IOException {
+	public void canGetURLsOfStreamEntriesWithEnclosure() throws IOException {
 		parseResource("valid.xml");
 		List<String> urls = Arrays.asList("http://example.com/123.S08E24.720p.HDTV.X264.[testtest].zip",
-				"http://example.com/1.zip",
+				"http://media.railscasts.com/assets/episodes/videos/366-sidekiq.mp4",
 				"http://example.com/12.zip",
 				"http://example.com/123.zip");
 		Set<String> seen = new HashSet<>(urls.size());
