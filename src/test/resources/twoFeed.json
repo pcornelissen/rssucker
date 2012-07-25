@@ -1,13 +1,16 @@
 {
-    "myTestFeed":{
-            "address":"full.xml",
-            "lastEpisode": 4,
-            "lastSeason": 3
-    },
-    "myTestFeed2":{
-            "address":"full2.xml",
-            "lastEpisode": 42,
-            "lastSeason": 32
-    }
+    "feeds":{
+		"myTestFeed":{
+				"address":"full.xml",
+				"lastEpisode": 4,
+				"lastSeason": 3
+		},
+		"myTestFeed2":{
+				"address":"full2.xml",
+				"lastEpisode": 42,
+				"lastSeason": 32
+		}
+	},
+	"downloaddir":"/tmp/test"
 
 }

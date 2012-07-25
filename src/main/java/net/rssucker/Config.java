@@ -40,12 +40,11 @@ class Config {
                         break;
                 }
             }
-            parseFeeds(rootNode);
         }
     }
 
-    private void parseFeeds(JsonNode rootNode) {
-        Iterator<Map.Entry<String, JsonNode>> iterator = rootNode.getFields();
+    private void parseFeeds(JsonNode feedsNode) {
+        Iterator<Map.Entry<String, JsonNode>> iterator = feedsNode.getFields();
         while (iterator.hasNext()) {
             Map.Entry<String, JsonNode> elt = iterator.next();
             JsonNode node = elt.getValue();
@@ -93,18 +92,24 @@ class Config {
         file.delete();
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode parentNode = mapper.createObjectNode();
-        for (FeedConfig feed : feeds) {
-            ObjectNode feedNode = parentNode.putObject(feed.getName());
-            feedNode.put("address", feed.getAddress());
-            feedNode.put("lastEpisode", feed.getEpisode().getNumber());
-            feedNode.put("lastSeason", feed.getEpisode().getSeason());
-        }
-        String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parentNode);
+	    feedsToNodes(parentNode.putObject("feeds"));
+	    parentNode.put("downloaddir",downloadLocation);
+
+	    String data = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parentNode);
 
         writeStringToFile(file, data);
     }
 
-    private void writeStringToFile(File file, String data) throws IOException {
+	private void feedsToNodes(ObjectNode parentNode) {
+		for (FeedConfig feed : feeds) {
+		    ObjectNode feedNode = parentNode.putObject(feed.getName());
+		    feedNode.put("address", feed.getAddress());
+		    feedNode.put("lastEpisode", feed.getEpisode().getNumber());
+		    feedNode.put("lastSeason", feed.getEpisode().getSeason());
+		}
+	}
+
+	private void writeStringToFile(File file, String data) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(file, true);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
                 fileOutputStream, 128 * 100);

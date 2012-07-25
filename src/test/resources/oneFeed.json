@@ -1,8 +1,9 @@
 {
-    "myTestFeed":{
-            "address":"full.xml",
-            "lastEpisode": 4,
-            "lastSeason": 3
+    "feeds":{
+		"myTestFeed":{
+				"address":"full.xml",
+				"lastEpisode": 4,
+				"lastSeason": 3
+		}
     }
-
 }

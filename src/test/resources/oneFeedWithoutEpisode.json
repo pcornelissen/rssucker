@@ -1,7 +1,9 @@
 {
-    "myTestFeed":{
-            "address":"full.xml",
-            "lastSeason": 3
-    }
-
+    "feeds":{
+		"myTestFeed":{
+				"address":"full.xml",
+				"lastSeason": 3
+		}
+    },
+	"downloaddir": "/tmp/test"
 }
