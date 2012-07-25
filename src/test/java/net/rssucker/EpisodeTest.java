@@ -80,15 +80,23 @@ public class EpisodeTest {
         assertThat(episode.equals("meepmeep"),is(false));
     }
 
-    @Test
-    public void testParseEpisodeSuccessAAxBBPattern() {
-        episode = Episode.parseEpisode("blabla 21x42 blabla");
-        assertThat(episode,is(notNullValue()));
-        assertThat(episode.getNumber(),is(42));
-        assertThat(episode.getSeason(),is(21));
-    }
+	@Test
+	public void testParseEpisodeSuccessAAxBBPattern() {
+		episode = Episode.parseEpisode("blabla 21x42 blabla");
+		assertThat(episode,is(notNullValue()));
+		assertThat(episode.getNumber(),is(42));
+		assertThat(episode.getSeason(),is(21));
+	}
 
-    @Test
+	@Test
+	public void testParseEpisodeSuccessHashBBPattern() {
+		episode = Episode.parseEpisode("blabla #42 blabla");
+		assertThat(episode,is(notNullValue()));
+		assertThat(episode.getNumber(),is(42));
+		assertThat(episode.getSeason(),is(0));
+	}
+
+	@Test
     public void testParseEpisodeSuccessSAAEBBPattern() {
         episode = Episode.parseEpisode("blabla S21E42 blabla");
         assertThat(episode,is(notNullValue()));

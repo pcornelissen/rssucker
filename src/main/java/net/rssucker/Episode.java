@@ -11,8 +11,9 @@ import java.util.regex.Pattern;
 
 public class Episode implements Comparable<Episode> {
     private static final String PATTERN_AAxBB = "[^\\d]*(?<season>\\d+)x(?<episode>\\d+).*";
-    private static final String PATTERN_sAAeBB = ".*s(?<season>\\d+)e(?<episode>\\d+).*";
-    private final int season;
+	private static final String PATTERN_sAAeBB = ".*s(?<season>\\d+)e(?<episode>\\d+).*";
+	private static final String PATTERN_hashBB = ".*#(?<episode>\\d+).*";
+	private final int season;
     private final int episodeNumber;
 
     public Episode(int season, int episodeNumber) {
@@ -62,12 +63,17 @@ public class Episode implements Comparable<Episode> {
     public static Episode parseEpisode(String text) {
         List<String> patterns = Arrays.asList(
                 PATTERN_AAxBB,
-                PATTERN_sAAeBB);
+                PATTERN_sAAeBB,
+		        PATTERN_hashBB);
         for (String pattern : patterns) {
             final Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
             final Matcher m = p.matcher(text);
             if (m.find()) {
-                return new Episode(Integer.valueOf(m.group("season")), Integer.valueOf(m.group("episode")));
+	            if(pattern.equals(PATTERN_hashBB))
+		            //No Season here
+		            return new Episode(0, Integer.valueOf(m.group("episode")));
+	            else
+		            return new Episode(Integer.valueOf(m.group("season")), Integer.valueOf(m.group("episode")));
             }
         }
         return null;
