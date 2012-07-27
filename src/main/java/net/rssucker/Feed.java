@@ -13,32 +13,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Feed provides access to the items of an rss feed which has been fetched
+ * and provided via the parse method. After calling "parse" you can find the
+ * items sorted by episode/season via getItems.
+ */
 class Feed {
 
 	private final FeedConfig config;
-
 	private SyndFeed feed;
-	private List<Item> items = null;
+	private List<Item> items = new ArrayList<>();
 
+	/**
+	 * Initializes the feed and saves the config for later use.
+	 *
+	 * @param config
+	 */
 	Feed(FeedConfig config) {
 		this.config = config;
 	}
 
+	/**
+	 * Parses the given XML Stream as RSS Feed and extracts the
+	 * necessary information. The result can be fetched via
+	 * {@link net.rssucker.Feed#getItems()} afterwards.
+	 *
+	 * @param reader
+	 */
 	public void parse(XmlReader reader) {
 		SyndFeedInput input = new SyndFeedInput();
 		try {
 			feed = input.build(reader);
-		} catch (FeedException e) {
-			throw new InvalidFeedException(e);
-		}
-	}
-
-	public Integer getItemCount() {
-		return feed.getEntries().size();
-	}
-
-	public List<Item> getItems() {
-		if (items == null) {
 			items = new ArrayList<>(getItemCount());
 			@SuppressWarnings("unchecked") List<SyndEntry> entries = feed.getEntries();
 			for (SyndEntry entry : entries) {
@@ -48,7 +53,16 @@ class Feed {
 				items.add(new Item(StringEscapeUtils.unescapeHtml4(entry.getTitle()), link));
 			}
 			Collections.sort((List<Item>) items, new Item.ItemComparator());
+		} catch (FeedException e) {
+			throw new InvalidFeedException(e);
 		}
+	}
+
+	public Integer getItemCount() {
+		return items.size();
+	}
+
+	public List<Item> getItems() {
 		return items;
 	}
 
