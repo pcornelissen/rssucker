@@ -16,7 +16,8 @@
             <title><![CDATA[Title1 with normal chars 1x1]]></title>
             <pubDate>Mon, 24 May 2010 12:11:10 GMT</pubDate>
             <link><![CDATA[http://example.com/1.zip]]></link>
-            <enclosure url="http://media.railscasts.com/assets/episodes/videos/366-sidekiq.mp4" length="32110609" type="video/mp4" />
+            <enclosure url="http://media.railscasts.com/assets/episodes/videos/366-sidekiq.mp4" length="32110609"
+                       type="video/mp4"/>
             <description>
                 <![CDATA[funny description1 without special chars]]></description>
         </item>

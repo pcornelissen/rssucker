@@ -6,11 +6,11 @@
         <ttl>30</ttl>
         <description>RSS feed for news</description>
         <item
-            <title><![CDATA[TITLE]]></title>
-            <pubDate>Mon, 24 May 2010 00:00:00 GMT</pubDate>
-            <link><![CDATA[http://example.com]]></link>
-            <description>
-                <![CDATA[description]]></description>
-        </item>
-    </channel>
-</rss>
+        <title><![CDATA[TITLE]]></title>
+        <pubDate>Mon, 24 May 2010 00:00:00 GMT</pubDate>
+        <link><![CDATA[http://example.com]]></link>
+        <description>
+            <![CDATA[description]]></description>
+    </item>
+</channel>
+        </rss>

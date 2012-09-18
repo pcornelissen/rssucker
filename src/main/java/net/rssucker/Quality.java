@@ -4,26 +4,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Quality {
-    HIGH("720p HDTV"),MEDIUM("HDTV"), ANY();
+	HIGH("720p HDTV"), MEDIUM("HDTV"), ANY();
 
-    private final List<String> possibleKeys;
+	private final List<String> possibleKeys;
 
-    private Quality(String... keys) {
-        possibleKeys= Arrays.asList(keys);
-    }
+	private Quality(String... keys) {
+		possibleKeys = Arrays.asList(keys);
+	}
 
-    List<String> getPossibleKeys() {
-        return possibleKeys;
-    }
+	List<String> getPossibleKeys() {
+		return possibleKeys;
+	}
 
-    public static Quality parseFromString(String string) {
-        for(Quality quality: values()){
-            for(String key:quality.getPossibleKeys()){
-                if(string.toLowerCase().contains(key.toLowerCase())){
-                    return quality;
-                }
-            }
-        }
-        return ANY;
-    }
+	public static Quality parseFromString(String string) {
+		for (Quality quality : values()) {
+			for (String key : quality.getPossibleKeys()) {
+				if (string.toLowerCase().contains(key.toLowerCase())) {
+					return quality;
+				}
+			}
+		}
+		return ANY;
+	}
 }
