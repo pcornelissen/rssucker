@@ -28,7 +28,7 @@ The Downloaddir needs to be writable.
 If you want rssucker to download all episodes including the first you can set the episode to 0.
 The episode and season always describes the last downloaded file.
 
-To build you need a JDK and maven 3.
+To build you need a JDK 7+ and maven 3.
 Just call
    mvn package
 
