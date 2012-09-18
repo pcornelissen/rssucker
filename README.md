@@ -13,7 +13,7 @@ to configure you need to create/edit (it will be created if it doesn't exist) th
 {
   "feeds" : {
     "Enter Description here" : {
-      "address" : "http://enter.url/that/leads/to/desired/rss.xml/feed"
+      "address" : "http://enter.url/that/leads/to/desired/rss.xml/feed",
       "lastEpisode" : 0,
       "lastSeason" : 1
     },
