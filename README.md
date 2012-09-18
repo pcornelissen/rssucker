@@ -9,6 +9,7 @@ java -jar rssucker-1.0.jar
 to configure you need to create/edit (it will be created if it doesn't exist) the file ~/.rssucker
 
 #########################
+```json
 {
   "feeds" : {
     "Enter Description here" : {
@@ -20,6 +21,7 @@ to configure you need to create/edit (it will be created if it doesn't exist) th
  },
   "downloaddir" : "/home/example/downloads"
 }
+```
 #########################
 The file get's rewritten on each run with the new episode and season.
 The Downloaddir needs to be writable.
