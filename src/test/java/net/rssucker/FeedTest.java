@@ -12,12 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
-import static org.junit.matchers.JUnitMatchers.hasItem;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 
 public class FeedTest {
@@ -40,7 +36,7 @@ public class FeedTest {
 	@Test
 	public void canReadNumberOfItems() throws IOException {
 		parseResource("valid.xml");
-		assertThat(feed.getItemCount(), is(4));
+		assertThat(feed.getItemCount()).isEqualTo(4);
 	}
 
 	@Test
@@ -52,8 +48,8 @@ public class FeedTest {
 				"http://example.com/123.zip");
 		Set<String> seen = new HashSet<>(urls.size());
 		for (Item item : feed.getItems()) {
-			assertThat(urls, hasItem(item.getUrl()));
-			assertThat(seen, not(hasItem(item.getUrl())));
+			assertThat(urls).containsOnlyOnce(item.getUrl());
+			assertThat(seen).doesNotContain(item.getUrl());
 			seen.add(item.getUrl());
 		}
 	}
@@ -68,8 +64,8 @@ public class FeedTest {
 				"Title3 with normal chars 1x1");
 		Set<String> seen = new HashSet<>(titles.size());
 		for (Item item : feed.getItems()) {
-			assertThat(titles, hasItem(item.getTitle()));
-			assertThat(seen, not(hasItem(item.getTitle())));
+			assertThat(titles).containsOnlyOnce(item.getTitle());
+			assertThat(seen).doesNotContain(item.getTitle());
 			seen.add(item.getTitle());
 		}
 	}
@@ -79,7 +75,7 @@ public class FeedTest {
 		parseResource("full.xml");
 
 		for (Item item : feed.getItems()) {
-			assertThat(item.getEpisode(), is(notNullValue()));
+			assertThat(item.getEpisode()).isNotNull();
 		}
 	}
 
@@ -88,7 +84,7 @@ public class FeedTest {
 		parseResource("full.xml");
 
 		for (Item item : feed.getItems()) {
-			assertThat(item.getQuality(), is(notNullValue()));
+			assertThat(item.getQuality()).isNotNull();
 		}
 	}
 
@@ -99,9 +95,9 @@ public class FeedTest {
 		for (Item item : feed.getItems()) {
 			if (oldItem != null) {
 				if (oldItem.getEpisode().getSeason() == item.getEpisode().getSeason()) {
-					assertThat(item.getEpisode().getNumber(), is(greaterThanOrEqualTo(oldItem.getEpisode().getNumber())));
+					assertThat(item.getEpisode().getNumber()).isGreaterThanOrEqualTo(oldItem.getEpisode().getNumber());
 				} else
-					assertThat(item.getEpisode().getSeason(), is(greaterThanOrEqualTo(oldItem.getEpisode().getSeason())));
+					assertThat(item.getEpisode().getSeason()).isGreaterThanOrEqualTo(oldItem.getEpisode().getSeason());
 			}
 			oldItem = item;
 		}
@@ -109,8 +105,8 @@ public class FeedTest {
 
 	private void parseResource(String name) throws IOException {
 		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(name);
-		assumeThat(stream, is(not(nullValue())));
+		assumeThat(stream).isNotNull();
 		feed.parse(new XmlReader(stream));
-		assertThat(feed.getItemCount(), is(greaterThan(0)));
+		assertThat(feed.getItemCount()).isGreaterThan(0);
 	}
 }

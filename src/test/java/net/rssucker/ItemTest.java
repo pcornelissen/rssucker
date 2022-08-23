@@ -2,29 +2,28 @@ package net.rssucker;
 
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ItemTest {
 	@Test
 	public void canDetectAXBBEpisodeSchema() {
 		Item item = new Item("TestShow 3X06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-		assertThat(item.getEpisode().getNumber(), is(6));
-		assertThat(item.getEpisode().getSeason(), is(3));
+		assertThat(item.getEpisode().getNumber()).isEqualTo(6);
+		assertThat(item.getEpisode().getSeason()).isEqualTo(3);
 	}
 
 	@Test
 	public void canDetectAxBBEpisodeSchema() {
 		Item item = new Item("TestShow 3x06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-		assertThat(item.getEpisode().getNumber(), is(6));
-		assertThat(item.getEpisode().getSeason(), is(3));
+		assertThat(item.getEpisode().getNumber()).isEqualTo(6);
+		assertThat(item.getEpisode().getSeason()).isEqualTo(3);
 	}
 
 	@Test
 	public void canDetectSAAEBBEpisodeSchema() {
 		Item item = new Item("TestShow S03E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-		assertThat(item.getEpisode().getNumber(), is(6));
-		assertThat(item.getEpisode().getSeason(), is(3));
+		assertThat(item.getEpisode().getNumber()).isEqualTo(6);
+		assertThat(item.getEpisode().getSeason()).isEqualTo(3);
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -35,14 +34,14 @@ public class ItemTest {
 	@Test
 	public void canDetermineQualityHigh() {
 		Item item = new Item("TestShow S03E06 (720p HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-		assertThat(item.getQuality(), is(Quality.HIGH));
+		assertThat(item.getQuality()).isEqualTo(Quality.HIGH);
 
 	}
 
 	@Test
 	public void canDetermineQualityMedium() {
 		Item item = new Item("TestShow S03E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
-		assertThat(item.getQuality(), is(Quality.MEDIUM));
+		assertThat(item.getQuality()).isEqualTo(Quality.MEDIUM);
 
 	}
 
@@ -51,7 +50,7 @@ public class ItemTest {
 		Item item1 = new Item("TestShow S05E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item item2 = new Item("TestShow S04E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item.ItemComparator itemComparator = new Item.ItemComparator();
-		assertThat(itemComparator.compare(item1, item2), is(1));
+		assertThat(itemComparator.compare(item1, item2)).isEqualTo(1);
 	}
 
 	@Test
@@ -59,7 +58,7 @@ public class ItemTest {
 		Item item1 = new Item("TestShow S03E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item item2 = new Item("TestShow S04E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item.ItemComparator itemComparator = new Item.ItemComparator();
-		assertThat(itemComparator.compare(item1, item2), is(-1));
+		assertThat(itemComparator.compare(item1, item2)).isEqualTo(-1);
 	}
 
 	@Test
@@ -67,7 +66,7 @@ public class ItemTest {
 		Item item1 = new Item("TestShow S04E07 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item item2 = new Item("TestShow S04E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item.ItemComparator itemComparator = new Item.ItemComparator();
-		assertThat(itemComparator.compare(item1, item2), is(1));
+		assertThat(itemComparator.compare(item1, item2)).isEqualTo(1);
 	}
 
 	@Test
@@ -75,7 +74,7 @@ public class ItemTest {
 		Item item1 = new Item("TestShow S04E05 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item item2 = new Item("TestShow S04E06 (HDTV-x264-ASAP) [providertag]", "http://example.com/TestShow.3X06.(HDTV-x264-ASAP).[providertag].file");
 		Item.ItemComparator itemComparator = new Item.ItemComparator();
-		assertThat(itemComparator.compare(item1, item2), is(-1));
+		assertThat(itemComparator.compare(item1, item2)).isEqualTo(-1);
 	}
 
 }

@@ -1,8 +1,8 @@
 package net.rssucker;
 
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -14,8 +14,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class ConfigTest {
@@ -35,78 +34,78 @@ public class ConfigTest {
 	@Test
 	public void initConfigWithMissingFile() throws IOException {
 		Config config = new Config(new File("test"), EMPTY_ARGS);
-		assertThat(config.getFeedCount(), is(0));
+		assertThat(config.getFeedCount()).isZero();
 	}
 
 	@Test
 	public void verboseIsOffByDefault() throws IOException {
 		Config config = new Config(new File("test"), EMPTY_ARGS);
-		assertThat(config.isVerbose(), is(false));
+		assertThat(config.isVerbose()).isFalse();
 	}
 
 	@Test
 	public void verboseCanBeSetViaArgs() throws IOException {
 		Config config = new Config(new File("oneFeed.json"), new String[]{"-v"});
-		assertThat(config.isVerbose(), is(true));
+		assertThat(config.isVerbose()).isTrue();
 	}
 
 	@Test
 	public void verboseCanBeSetViaCorrectArgs() throws IOException {
 		Config config = new Config(new File("oneFeed.json"), new String[]{"-V", "z", "v", "-w", "-ve", "-a"});
-		assertThat(config.isVerbose(), is(false));
+		assertThat(config.isVerbose()).isFalse();
 	}
 
 	@Test
 	public void initConfigWithExistingFileWithOneFeed() throws IOException, URISyntaxException {
 		File configFile = initConfigFile("oneFeed.json");
 		Config config = new Config(configFile, EMPTY_ARGS);
-		assertThat(config.getFeedCount(), is(1));
+		assertThat(config.getFeedCount()).isEqualTo(1);
 	}
 
 	@Test
 	public void fetchAddressFromConfigFeed() throws IOException, URISyntaxException {
 		File configFile = initConfigFile("oneFeed.json");
 		Config config = new Config(configFile, EMPTY_ARGS);
-		assertThat(config.getFeeds().get(0).getAddress(), is("full.xml"));
-		assertThat(config.getFeeds().get(0).getEpisode(), is(new Episode(3, 4)));
+		assertThat(config.getFeeds().get(0).getAddress()).isEqualTo("full.xml");
+		assertThat(config.getFeeds().get(0).getEpisode()).isEqualTo(new Episode(3, 4));
 	}
 
 	@Test
 	public void fetchAddressFromConfigFeedWithoutSeason() throws IOException, URISyntaxException {
 		File configFile = initConfigFile("oneFeedWithoutSeason.json");
 		Config config = new Config(configFile, EMPTY_ARGS);
-		assertThat(config.getFeeds().get(0).getAddress(), is("full.xml"));
-		assertThat(config.getFeeds().get(0).getEpisode(), is(new Episode(0, 4)));
+		assertThat(config.getFeeds().get(0).getAddress()).isEqualTo("full.xml");
+		assertThat(config.getFeeds().get(0).getEpisode()).isEqualTo(new Episode(0, 4));
 	}
 
 	@Test
 	public void fetchAddressFromConfigFeedWithoutEpisode() throws IOException, URISyntaxException {
 		File configFile = initConfigFile("oneFeedWithoutEpisode.json");
 		Config config = new Config(configFile, EMPTY_ARGS);
-		assertThat(config.getFeeds().get(0).getAddress(), is("full.xml"));
-		assertThat(config.getFeeds().get(0).getEpisode(), is(new Episode(3, 0)));
+		assertThat(config.getFeeds().get(0).getAddress()).isEqualTo("full.xml");
+		assertThat(config.getFeeds().get(0).getEpisode()).isEqualTo(new Episode(3, 0));
 	}
 
 	@Test
 	public void fetch2FeedsFromConfig() throws IOException, URISyntaxException {
 		File configFile = initConfigFile("twoFeed.json");
 		Config config = new Config(configFile, EMPTY_ARGS);
-		assertThat(config.getFeedCount(), is(2));
-		assertThat(config.getFeeds().get(1).getAddress(), is("full2.xml"));
-		assertThat(config.getFeeds().get(1).getEpisode(), is(new Episode(32, 42)));
+		assertThat(config.getFeedCount()).isEqualTo(2);
+		assertThat(config.getFeeds().get(1).getAddress()).isEqualTo("full2.xml");
+		assertThat(config.getFeeds().get(1).getEpisode()).isEqualTo(new Episode(32, 42));
 	}
 
 	@Test
 	public void writeUpdatedEpisodeToConfig() throws IOException, URISyntaxException {
 		File configFile = initConfigFile("twoFeed.json");
 		Config config = new Config(configFile, EMPTY_ARGS);
-		assertThat(config.getFeedCount(), is(2));
+		assertThat(config.getFeedCount()).isEqualTo(2);
 		config.getFeeds().get(1).setEpisode(new Episode(23, 422));
 		config.write();
 
 		Config updatedConfig = new Config(configFile, EMPTY_ARGS);
-		assertThat(updatedConfig.getFeedCount(), is(2));
-		assertThat(updatedConfig.getFeeds().get(1).getEpisode(), is(new Episode(23, 422)));
+		assertThat(updatedConfig.getFeedCount()).isEqualTo(2);
+		assertThat(updatedConfig.getFeeds().get(1).getEpisode()).isEqualTo(new Episode(23, 422));
 	}
 
 	@Test
@@ -115,12 +114,12 @@ public class ConfigTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.readTree(configFile);
-		assertThat(rootNode.has("downloaddir"), is(false));
+		assertThat(rootNode.has("downloaddir")).isFalse();
 
 		Config config = new Config(configFile, EMPTY_ARGS);
 		config.write();
 
 		rootNode = mapper.readTree(configFile);
-		assertThat(rootNode.has("downloaddir"), is(true));
+		assertThat(rootNode.has("downloaddir")).isTrue();
 	}
 }
